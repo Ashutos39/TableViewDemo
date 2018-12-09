@@ -62,14 +62,16 @@ class ViewController: UIViewController {
             showAlert(withTitleMessageAndAction: "Warning!!!!", message: "Please add a valid mail Id", action: false)
             return
         }
-        getData()
+        getData(emailId: EmailIdTxtFld.text!,showIndicator: true)
         
     }
     
-    func getData(){
+    func getData(emailId: String,showIndicator : Bool){
+        if showIndicator{
         SVProgressHUD.show(withStatus: "Please wait...")
         self.view.isUserInteractionEnabled = false
-        WebService.sharedService.dataFromAPI(emailId: EmailIdTxtFld.text) { (data, error) in
+        }
+        WebService.sharedService.dataFromAPI(emailId: emailId) { (data, error) in
             SVProgressHUD.dismiss()
             self.view.isUserInteractionEnabled = true
             if error != nil{
@@ -123,22 +125,7 @@ class ViewController: UIViewController {
         if Connectivity.isConnectedToInternet() == false{
             return
         }
-      
-        WebService.sharedService.dataFromAPI(emailId: UserDefaults.standard.string(forKey: "EmailID")) { (data, error) in
-            self.view.isUserInteractionEnabled = true
-            if error != nil{
-                self.showAlert(withTitleMessageAndAction: "Warning!!!!", message: "Kindly Check Your internet connection and try Again.", action: false)
-                return
-            }
-            ALLProfile.resetAllRecords()
-            if let retrievedData = data as? [String: AnyObject]{
-                let DataArray = retrievedData["items"] as! [[String : AnyObject]]
-                ALLProfile.insertToDbWithProfileDatails(indiProfile: DataArray)
-                self.getAllDetails()
-                self.TableView.reloadData()
-                self.popUpView.isHidden = true
-            }
-        }
+getData(emailId: UserDefaults.standard.string(forKey: "EmailID")!, showIndicator: false)
     }
     
     
