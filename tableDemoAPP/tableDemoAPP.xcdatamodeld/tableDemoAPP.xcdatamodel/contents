@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14135" systemVersion="17G65" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="ALLProfile" representedClassName="ALLProfile" syncable="YES">
+        <relationship name="indiProfileList" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Profiles" inverseName="indiData" inverseEntity="Profiles" syncable="YES"/>
+    </entity>
+    <entity name="Profiles" representedClassName="Profiles" syncable="YES">
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="imageUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="indiData" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ALLProfile" inverseName="indiProfileList" inverseEntity="ALLProfile" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Profiles" positionX="-63" positionY="-18" width="128" height="105"/>
+        <element name="ALLProfile" positionX="-63" positionY="9" width="128" height="60"/>
+    </elements>
+</model>
