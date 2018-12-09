@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Alamofire
 
 enum ApiEndPoints {
     
@@ -53,4 +54,11 @@ class WebService: NSObject {
         print("service pending = \(self.serviceArray.count)")
         self.serviceArray.removeAll()
     }
+    
 }
+class Connectivity {
+    class func isConnectedToInternet() ->Bool {
+        return NetworkReachabilityManager()!.isReachable
+    }
+}
+

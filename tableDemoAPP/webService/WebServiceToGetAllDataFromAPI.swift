@@ -26,5 +26,8 @@ class WebServiceToGetAllDataFromAPI : WebServiceRequest{
     
     override func responseSuccess(data : Any?){
         super.responseSuccess(data: data)
-    }    
+    }
+    
+    
 }
+

@@ -65,4 +65,20 @@ public class ALLProfile: NSManagedObject{
         })
         return entity
     }
+    
+     public static func resetAllRecords(){
+        
+        let context = ( UIApplication.shared.delegate as! AppDelegate ).persistentContainer.viewContext
+        let deleteFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "ALLProfile")
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: deleteFetch)
+        do
+        {
+            try context.execute(deleteRequest)
+            try context.save()
+        }
+        catch
+        {
+            print ("There was an error")
+        }
+    }
 }
