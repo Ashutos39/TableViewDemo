@@ -45,6 +45,8 @@ class ViewController: UIViewController {
     func setUpUI(){
         if dataArray?.indiProfileList?.array.count == 0 || dataArray?.indiProfileList?.array == nil{
             popUpView.isHidden = false
+         
+            
         }else{
             popUpView.isHidden = true
             scheduledTimerWithTimeInterval()
@@ -52,7 +54,7 @@ class ViewController: UIViewController {
         
     }
     
-    @IBAction func SubmitBtnPressed(_ sender: Any) {
+    @IBAction func submitBtnPressed(_ sender: Any) {
         view.endEditing(true)
         if EmailIdTxtFld.text == ""{
             showAlert(withTitleMessageAndAction: "Warning!!!", message: "Please enter your mail Id", action: false)
@@ -68,8 +70,8 @@ class ViewController: UIViewController {
     
     func getData(emailId: String,showIndicator : Bool){
         if showIndicator{
-        SVProgressHUD.show(withStatus: "Please wait...")
-        self.view.isUserInteractionEnabled = false
+            SVProgressHUD.show(withStatus: "Please wait...")
+            self.view.isUserInteractionEnabled = false
         }
         WebService.sharedService.dataFromAPI(emailId: emailId) { (data, error) in
             SVProgressHUD.dismiss()
@@ -82,7 +84,7 @@ class ViewController: UIViewController {
             if let retrievedData = data as? [String: AnyObject]{
                 let DataArray = retrievedData["items"] as! [[String : AnyObject]]
                 ALLProfile.insertToDbWithProfileDatails(indiProfile: DataArray)
-                UserDefaults.standard.set(self.EmailIdTxtFld.text, forKey: "EmailID")
+                UserDefaults.standard.set(emailId, forKey: "EmailID")
                 self.getAllDetails()
                 self.TableView.reloadData()
                 self.popUpView.isHidden = true
@@ -125,7 +127,8 @@ class ViewController: UIViewController {
         if Connectivity.isConnectedToInternet() == false{
             return
         }
-getData(emailId: UserDefaults.standard.string(forKey: "EmailID")!, showIndicator: false)
+        
+        getData(emailId: UserDefaults.standard.string(forKey: "EmailID")!, showIndicator: false)
     }
     
     
@@ -144,7 +147,7 @@ extension ViewController : UITableViewDataSource,UITableViewDelegate{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! DataTableViewCell
         cell.selectionStyle = .none
-       let indiProfile = dataArray?.indiProfileList?[indexPath.row] as! Profiles
+        let indiProfile = dataArray?.indiProfileList?[indexPath.row] as! Profiles
         
         cell.emailIDShowingLbl.text = indiProfile.email
         cell.fullNameLbl.text = indiProfile.name
